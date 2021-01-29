@@ -27,3 +27,21 @@ INTO retiring_titles
 FROM unique_titles AS ut
 GROUP BY ut.title
 ORDER BY ut.count DESC;
+
+--Employees who are eligible to participate in a mentorship program
+SELECT DISTINCT ON (ce.emp_no)
+	ce.emp_no,
+	ce.first_name,
+	ce.last_name,
+	ce.birth_date,
+	de.from_date,
+	de.to_date,
+	t.title
+INTO mentorship_eligibility
+FROM employees as ce
+INNER JOIN dept_emp AS de
+ON (ce.emp_no = de.emp_no)
+INNER JOIN titles AS t
+ON (ce.emp_no = t.emp_no)
+WHERE (ce.birth_date BETWEEN '1965-01-01' AND '1965-12-31')
+ORDER BY emp_no;
